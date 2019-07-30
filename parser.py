@@ -31,5 +31,5 @@ def parser():
             exit()
     else:
         print("Invalid format: Only numbers, commas, and hyphens allowed")
+        exit()
     return [project, problems]
-

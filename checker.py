@@ -1,14 +1,18 @@
-from selenium import webdriver
 from time import sleep
 from config import driver, email, password
 
 
-def checker(project, problems):
+def login():
+    print('logging in...')
     driver.get('https://intranet.hbtn.io')
     driver.find_element_by_id("user_login").send_keys(email)
     driver.find_element_by_id("user_password").send_keys(password)
     driver.find_element_by_name("commit").click()
 
+    # check for login success/failure
+
+
+def checker(project,problems):
     for count, problem in enumerate(problems):
         print('checking #' + str(problem) + '...')
         if count != 0:

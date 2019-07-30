@@ -1,9 +1,10 @@
 from parser import parser
-from checker import checker
+from checker import checker, login
 
 
 def main():
     user_input = parser()
+    login()
     checker(user_input[0], user_input[1])
 
 
