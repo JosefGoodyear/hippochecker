@@ -29,3 +29,15 @@ def checker(project,problems):
         sleep(0.5)
         check = driver.find_elements_by_class_name('correction_request_test_admin')
         check[problem].click()
+    # get feedback
+    driver.switch_to.window(driver.window_handles[0])
+    sleep(35)  # add a sleep loop?
+    checks = driver.find_elements_by_class_name('check-inline')
+    passed = driver.find_elements_by_class_name('success')
+    failed = driver.find_elements_by_class_name('fail')
+    req = driver.find_elements_by_class_name('requirement')
+    code = driver.find_elements_by_class_name('code')
+
+    print('# of checks: ' + str(len(checks)))
+    print('PASSED: ' + str(len(passed)) + 'checks. FAILED: ' + str(len(failed)) + 'checks.')
+    print('Requirements: ' + str(len(req)) + 'checks. Output: ' + str(len(code)) + ' checks.')
