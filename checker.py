@@ -35,26 +35,30 @@ def checker(project, problems):
             check[problem].click()
         except IndexError:
             print(str(problem) + ' is not a valid problem, or cannot be checked.')
+    return problems
 
-    # get feedback
-    driver.switch_to.window(driver.window_handles[0])
-    try:
-        WebDriverWait(driver, 60).until(EC.presence_of_element_located((By.CLASS_NAME, 'check-inline')))
-        checks = driver.find_elements_by_class_name('check-inline')
-        passed = driver.find_elements_by_class_name('success')
-        failed = driver.find_elements_by_class_name('fail')
-        req = driver.find_elements_by_class_name('requirement')
-        code = driver.find_elements_by_class_name('code')
-        code_passed = set(passed) & set(code)
-        code_failed = set(failed) & set(code)
-        req_passed = set(passed) & set(req)
-        req_failed = set(failed) & set(req)
-        print('-------- Problem #' + str(problem) + ' --------')
-        print('NUMBER OF CHECKS: ' + str(len(checks)))
-        print('TOTAL:' + str(len(passed)) + ' passed. ' + str(len(failed)) + ' failed.')
-        print('REQUIREMENTS: ' + str(len(req_passed)) + ' passed. ' + str(len(req_failed)) + ' failed.')
-        print('OUTPUT: ' + str(len(code_passed)) + ' passed. ' + str(len(code_failed)) + ' failed.')
-    except:
-        print('Results failed to load.')
-        driver.quit()
-        exit()
+
+def results(problems):
+    for count, problem in enumerate(problems):
+        driver.switch_to.window(driver.window_handles[count])
+        sleep(1)  # allow time for tab switch
+        print('tab: ' + str(count))
+        try:
+            WebDriverWait(driver, 60).until(EC.presence_of_element_located((By.CLASS_NAME, 'check-inline')))
+            checks = driver.find_elements_by_class_name('check-inline')
+            passed = driver.find_elements_by_class_name('success')
+            failed = driver.find_elements_by_class_name('fail')
+            req = driver.find_elements_by_class_name('requirement')
+            code = driver.find_elements_by_class_name('code')
+            code_passed = set(passed) & set(code)
+            code_failed = set(failed) & set(code)
+            req_passed = set(passed) & set(req)
+            req_failed = set(failed) & set(req)
+            print('-------- Problem #' + str(problem) + ' --------')
+            print('NUMBER OF CHECKS: ' + str(len(checks)))
+            print('TOTAL:' + str(len(passed)) + ' passed. ' + str(len(failed)) + ' failed.')
+            print('REQUIREMENTS: ' + str(len(req_passed)) + ' passed. ' + str(len(req_failed)) + ' failed.')
+            print('OUTPUT: ' + str(len(code_passed)) + ' passed. ' + str(len(code_failed)) + ' failed.')
+        except:
+            print('-------- Problem #' + str(problem) + ' --------')
+            print('Results failed to load.')

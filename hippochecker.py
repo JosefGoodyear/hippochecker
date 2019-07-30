@@ -1,11 +1,12 @@
 from parser import parser
-from checker import checker, login
+from checker import checker, login, results
 
 
 def main():
     user_input = parser()
     login()
-    checker(user_input[0], user_input[1])
+    problems = checker(user_input[0], user_input[1])
+    results(problems)
 
 
 if __name__ == "__main__":
