@@ -39,26 +39,42 @@ def checker(project, problems):
 
 
 def results(problems):
+    old_code_passed = []
+    old_code_failed = []
+    old_req_passed = []
+    old_req_failed = []
     for count, problem in enumerate(problems):
         driver.switch_to.window(driver.window_handles[count])
         sleep(1)  # allow time for tab switch
-        print('tab: ' + str(count))
         try:
-            WebDriverWait(driver, 60).until(EC.presence_of_element_located((By.CLASS_NAME, 'check-inline')))
-            checks = driver.find_elements_by_class_name('check-inline')
-            passed = driver.find_elements_by_class_name('success')
-            failed = driver.find_elements_by_class_name('fail')
-            req = driver.find_elements_by_class_name('requirement')
-            code = driver.find_elements_by_class_name('code')
-            code_passed = set(passed) & set(code)
-            code_failed = set(failed) & set(code)
-            req_passed = set(passed) & set(req)
-            req_failed = set(failed) & set(req)
+            # WebDriverWait(driver, 60).until(EC.presence_of_element_located((By.CLASS_NAME, 'check-inline')))
+            sleep(25)
+            code_passed = driver.find_elements_by_xpath('//*[@title="Correct output of your code - success"]')
+            code_failed = driver.find_elements_by_xpath('//*[@title="Correct output of your code - fail"]')
+            req_passed = driver.find_elements_by_xpath('//*[@title="Requirement - success"]')
+            req_failed = driver.find_elements_by_xpath('//*[@title="Requirement - fail"]')
+
+
+
+            # checks = driver.find_element_by_xpath("//div[@class='result']")
+            # checks = driver.find_elements_by_class_name('check-inline')
+            # passed = driver.find_elements_by_class_name('success')
+            # failed = driver.find_elements_by_class_name('fail')
+            # req = driver.find_elements_by_class_name('requirement')
+            # code = driver.find_elements_by_class_name('code')
+            # code_passed = set(passed) & set(code)
+            # code_failed = set(failed) & set(code)
+            # req_passed = set(passed) & set(req)
+            # req_failed = set(failed) & set(req)
             print('-------- Problem #' + str(problem) + ' --------')
-            print('NUMBER OF CHECKS: ' + str(len(checks)))
-            print('TOTAL:' + str(len(passed)) + ' passed. ' + str(len(failed)) + ' failed.')
-            print('REQUIREMENTS: ' + str(len(req_passed)) + ' passed. ' + str(len(req_failed)) + ' failed.')
-            print('OUTPUT: ' + str(len(code_passed)) + ' passed. ' + str(len(code_failed)) + ' failed.')
+            # print('NUMBER OF CHECKS: ' + str(len(checks)))
+            # print('TOTAL:' + str(len(passed)) + ' passed. ' + str(len(failed)) + ' failed.')
+            print('REQUIREMENTS: ' + str(len(req_passed) - len(old_req_passed)) + ' passed. ' + str(len(req_failed) - len(old_req_failed)) + ' failed.')
+            print('OUTPUT: ' + str(len(code_passed) - len(old_code_passed)) + ' passed. ' + str(len(code_failed) - len(old_code_failed)) + ' failed.')
+            old_code_passed = code_passed[:]
+            old_code_failed = code_failed[:]
+            old_req_passed = req_passed[:]
+            old_req_failed = req_failed[:]
         except:
             print('-------- Problem #' + str(problem) + ' --------')
             print('Results failed to load.')
