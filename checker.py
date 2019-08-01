@@ -34,7 +34,7 @@ def checker(project, problems):
             check = driver.find_elements_by_class_name('correction_request_test_admin')
             check[problem].click()
         except IndexError:
-            print(str(problem) + ' is not a valid problem, or cannot be checked.')
+            print(str(problem) + ' is not a valid problem number, or cannot be checked.')
     return problems
 
 
