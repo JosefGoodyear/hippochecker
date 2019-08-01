@@ -47,8 +47,7 @@ def results(problems):
         driver.switch_to.window(driver.window_handles[count])
         sleep(1)  # allow time for tab switch
         try:
-            sleep(25)
-#            WebDriverWait(driver, 60).until(EC.invisibility_of_element_located((By.CLASS_NAME, 'spinner')))
+            sleep(25)  # sleep
             code_passed = driver.find_elements_by_xpath('//*[@title="Correct output of your code - success"]')
             code_failed = driver.find_elements_by_xpath('//*[@title="Correct output of your code - fail"]')
             req_passed = driver.find_elements_by_xpath('//*[@title="Requirement - success"]')
