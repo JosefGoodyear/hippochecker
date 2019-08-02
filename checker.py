@@ -44,7 +44,7 @@ def results(problems):
     for count, problem in enumerate(problems):
         driver.switch_to.window(driver.window_handles[count])
         sleep(1)  # allow time for tab switch and loading to start
-        wait = WebDriverWait(driver, 1)  # if you timeout during results reporting, try increasing this number.
+        wait = WebDriverWait(driver, 60)  # if you timeout during results reporting, try increasing this number.
         try:
             wait.until(EC.visibility_of_any_elements_located((By.CLASS_NAME, "check-inline")))
             sleep(1)  # allow time for all results to appear
