@@ -42,13 +42,14 @@ def checker(project, problems):
 def results(problems):
     for count, problem in enumerate(problems):
         driver.switch_to.window(driver.window_handles[count])
-        sleep(0.5)  # allow time for tab switch
+        sleep(2)  # allow time for tab switch and loading to start
+        wait = WebDriverWait(driver, 60)
+        wait.until(EC.invisibility_of_element_located((By.CLASS_NAME, "spinner")))
+        sleep(5)  # allow time for results to appear
         code_passed_count = 0
         code_failed_count = 0
         req_passed_count = 0
         req_failed_count = 0
-
-        sleep(25)  # sleep
         try:
             code_passed = driver.find_elements_by_xpath('//div[@title="Correct output of your code - success"]')
             code_failed = driver.find_elements_by_xpath('//div[@title="Correct output of your code - fail"]')
