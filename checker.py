@@ -30,45 +30,59 @@ def checker(project, problems):
 
         try:
             buttons[problem].click()
-            sleep(0.5)
+            sleep(1)
             check = driver.find_elements_by_class_name('correction_request_test_admin')
             check[problem].click()
         except IndexError:
             print(str(problem) + ' is not a valid problem number, or cannot be checked.')
+            pass
     return problems
 
 
 def results(problems):
-    old_code_passed = []
-    old_code_failed = []
-    old_req_passed = []
-    old_req_failed = []
     for count, problem in enumerate(problems):
         driver.switch_to.window(driver.window_handles[count])
-        sleep(1)  # allow time for tab switch
+        sleep(0.5)  # allow time for tab switch
+        code_passed_count = 0
+        code_failed_count = 0
+        req_passed_count = 0
+        req_failed_count = 0
+
+        sleep(25)  # sleep
         try:
-            sleep(25)  # sleep
-            code_passed = driver.find_elements_by_xpath('//*[@title="Correct output of your code - success"]')
-            code_failed = driver.find_elements_by_xpath('//*[@title="Correct output of your code - fail"]')
-            req_passed = driver.find_elements_by_xpath('//*[@title="Requirement - success"]')
-            req_failed = driver.find_elements_by_xpath('//*[@title="Requirement - fail"]')
-            code_passed_count = len(code_passed) - len(old_code_passed)
-            code_failed_count = len(code_failed) - len(old_code_failed)
-            req_passed_count = len(req_passed) - len(old_req_passed)
-            req_failed_count = len(req_failed) - len(old_req_failed)
+            code_passed = driver.find_elements_by_xpath('//div[@title="Correct output of your code - success"]')
+            code_failed = driver.find_elements_by_xpath('//div[@title="Correct output of your code - fail"]')
+            req_passed = driver.find_elements_by_xpath('//div[@title="Requirement - success"]')
+            req_failed = driver.find_elements_by_xpath('//div[@title="Requirement - fail"]')
+            for cp in code_passed:
+                if cp.is_displayed():
+                    code_passed_count = code_passed_count + 1
+                    print("cpc")
+                else:
+                    print("no")
+            for cf in code_failed:
+                if cf.is_displayed():
+                    code_failed_count = code_failed_count + 1
+                    print("cfc")
+                else:
+                    print("no")
+            for rp in req_passed:
+                if rp.is_displayed():
+                    req_passed_count = req_passed_count + 1
+                    print("rpc")
+                else:
+                    print("no")
+            for rf in req_failed:
+                if rf.is_displayed():
+                    req_failed_count = req_failed_count + 1
+                    print("rfc")
+                else:
+                    print("no")
 
             print('-------- Problem #' + str(problem) + ' --------')
             print('REQUIREMENTS: ' + str(req_passed_count) + ' passed. ' + str(req_failed_count) + ' failed.')
             print('OUTPUT: ' + str(code_passed_count) + ' passed. ' + str(code_failed_count) + ' failed.')
 
-            if count == 0 or code_passed_count:
-                old_code_passed = code_passed[:]
-            if count == 0 or code_failed_count:
-                old_code_failed = code_failed[:]
-            if count == 0 or req_passed_count:
-                old_req_passed = req_passed[:]
-            if count == 0 or req_failed_count:
-                old_req_failed = req_failed[:]
         except:
             print('-------- Problem #' + str(problem) + ' --------')
             print('Results failed to load.')
