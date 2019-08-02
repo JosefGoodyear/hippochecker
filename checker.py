@@ -57,28 +57,15 @@ def results(problems):
             for cp in code_passed:
                 if cp.is_displayed():
                     code_passed_count = code_passed_count + 1
-                    print("cpc")
-                else:
-                    print("no")
             for cf in code_failed:
                 if cf.is_displayed():
                     code_failed_count = code_failed_count + 1
-                    print("cfc")
-                else:
-                    print("no")
             for rp in req_passed:
                 if rp.is_displayed():
                     req_passed_count = req_passed_count + 1
-                    print("rpc")
-                else:
-                    print("no")
             for rf in req_failed:
                 if rf.is_displayed():
                     req_failed_count = req_failed_count + 1
-                    print("rfc")
-                else:
-                    print("no")
-
             print('-------- Problem #' + str(problem) + ' --------')
             print('REQUIREMENTS: ' + str(req_passed_count) + ' passed. ' + str(req_failed_count) + ' failed.')
             print('OUTPUT: ' + str(code_passed_count) + ' passed. ' + str(code_failed_count) + ' failed.')
