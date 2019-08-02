@@ -3,6 +3,7 @@ from config import driver, email, password
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
+from selenium.common.exceptions import TimeoutException
 
 
 def login():
@@ -43,14 +44,18 @@ def results(problems):
     for count, problem in enumerate(problems):
         driver.switch_to.window(driver.window_handles[count])
         sleep(1)  # allow time for tab switch and loading to start
-        wait = WebDriverWait(driver, 60)  # if you timeout during results reporting, try increasing this number.
-        wait.until(EC.visibility_of_any_elements_located((By.CLASS_NAME, "check-inline")))
-        sleep(1)  # allow time for all results to appear
+        wait = WebDriverWait(driver, 1)  # if you timeout during results reporting, try increasing this number.
+        try:
+            wait.until(EC.visibility_of_any_elements_located((By.CLASS_NAME, "check-inline")))
+            sleep(1)  # allow time for all results to appear
+        except TimeoutException:
+            print('-------- Problem #' + str(problem) + ' --------')
+            print("Upon reporting results, timeout occurred")
+            continue
         code_passed_count = 0
         code_failed_count = 0
         req_passed_count = 0
         req_failed_count = 0
-
         code_passed = driver.find_elements_by_xpath('//div[@title="Correct output of your code - success"]')
         code_failed = driver.find_elements_by_xpath('//div[@title="Correct output of your code - fail"]')
         req_passed = driver.find_elements_by_xpath('//div[@title="Requirement - success"]')
