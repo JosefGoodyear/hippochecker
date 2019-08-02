@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 from parser import parser
 from checker import checker, login, results
 from config import results_in_terminal, headless, driver
