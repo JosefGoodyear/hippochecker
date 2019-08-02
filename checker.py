@@ -50,27 +50,28 @@ def results(problems):
         code_failed_count = 0
         req_passed_count = 0
         req_failed_count = 0
-        try:
-            code_passed = driver.find_elements_by_xpath('//div[@title="Correct output of your code - success"]')
-            code_failed = driver.find_elements_by_xpath('//div[@title="Correct output of your code - fail"]')
-            req_passed = driver.find_elements_by_xpath('//div[@title="Requirement - success"]')
-            req_failed = driver.find_elements_by_xpath('//div[@title="Requirement - fail"]')
-            for cp in code_passed:
-                if cp.is_displayed():
-                    code_passed_count = code_passed_count + 1
-            for cf in code_failed:
-                if cf.is_displayed():
-                    code_failed_count = code_failed_count + 1
-            for rp in req_passed:
-                if rp.is_displayed():
-                    req_passed_count = req_passed_count + 1
-            for rf in req_failed:
-                if rf.is_displayed():
-                    req_failed_count = req_failed_count + 1
-            print('-------- Problem #' + str(problem) + ' --------')
-            print('REQUIREMENTS: ' + str(req_passed_count) + ' passed. ' + str(req_failed_count) + ' failed.')
-            print('OUTPUT: ' + str(code_passed_count) + ' passed. ' + str(code_failed_count) + ' failed.')
 
-        except:
+        code_passed = driver.find_elements_by_xpath('//div[@title="Correct output of your code - success"]')
+        code_failed = driver.find_elements_by_xpath('//div[@title="Correct output of your code - fail"]')
+        req_passed = driver.find_elements_by_xpath('//div[@title="Requirement - success"]')
+        req_failed = driver.find_elements_by_xpath('//div[@title="Requirement - fail"]')
+        sleep(1)
+        for cp in code_passed:
+            if cp.is_displayed():
+                code_passed_count = code_passed_count + 1
+        for cf in code_failed:
+            if cf.is_displayed():
+                code_failed_count = code_failed_count + 1
+        for rp in req_passed:
+            if rp.is_displayed():
+                req_passed_count = req_passed_count + 1
+        for rf in req_failed:
+            if rf.is_displayed():
+                req_failed_count = req_failed_count + 1
+        if code_passed_count == 0 and code_failed_count == 0 and req_passed_count == 0 and req_failed_count == 0:
             print('-------- Problem #' + str(problem) + ' --------')
-            print('Results failed to load.')
+            print("Results failed to load.")
+            continue
+        print('-------- Problem #' + str(problem) + ' --------')
+        print('REQUIREMENTS: ' + str(req_passed_count) + ' passed. ' + str(req_failed_count) + ' failed.')
+        print('OUTPUT: ' + str(code_passed_count) + ' passed. ' + str(code_failed_count) + ' failed.')
