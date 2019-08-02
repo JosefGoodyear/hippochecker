@@ -12,7 +12,7 @@ def login():
         driver.find_element_by_id("user_login").send_keys(email)
         driver.find_element_by_id("user_password").send_keys(password)
         driver.find_element_by_name("commit").click()
-        WebDriverWait(driver, 30).until(EC.presence_of_element_located((By.CLASS_NAME, 'signed_in')))
+        WebDriverWait(driver, 30).until(EC.visibility_of_element_located((By.CLASS_NAME, 'signed_in')))
     except:
         print("login failed.")
         driver.quit()
@@ -43,9 +43,9 @@ def results(problems):
     for count, problem in enumerate(problems):
         driver.switch_to.window(driver.window_handles[count])
         sleep(1)  # allow time for tab switch and loading to start
-        wait = WebDriverWait(driver, 60)
-        wait.until(EC.visibility_of_element_located((By.CLASS_NAME, "task_correction_modal")))
-        sleep(3)  # allow time for results to appear
+        wait = WebDriverWait(driver, 60)  # if you timeout during results reporting, try increasing this number.
+        wait.until(EC.visibility_of_any_elements_located((By.CLASS_NAME, "check-inline")))
+        sleep(1)  # allow time for all results to appear
         code_passed_count = 0
         code_failed_count = 0
         req_passed_count = 0
@@ -55,19 +55,18 @@ def results(problems):
         code_failed = driver.find_elements_by_xpath('//div[@title="Correct output of your code - fail"]')
         req_passed = driver.find_elements_by_xpath('//div[@title="Requirement - success"]')
         req_failed = driver.find_elements_by_xpath('//div[@title="Requirement - fail"]')
-        sleep(1)
         for cp in code_passed:
             if cp.is_displayed():
-                code_passed_count = code_passed_count + 1
+                code_passed_count += 1
         for cf in code_failed:
             if cf.is_displayed():
-                code_failed_count = code_failed_count + 1
+                code_failed_count += 1
         for rp in req_passed:
             if rp.is_displayed():
-                req_passed_count = req_passed_count + 1
+                req_passed_count += 1
         for rf in req_failed:
             if rf.is_displayed():
-                req_failed_count = req_failed_count + 1
+                req_failed_count += 1
         if code_passed_count == 0 and code_failed_count == 0 and req_passed_count == 0 and req_failed_count == 0:
             print('-------- Problem #' + str(problem) + ' --------')
             print("Results failed to load.")
