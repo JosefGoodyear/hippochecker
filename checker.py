@@ -13,8 +13,8 @@ def login():
         driver.find_element_by_id("user_login").send_keys(email)
         driver.find_element_by_id("user_password").send_keys(password)
         driver.find_element_by_name("commit").click()
-        WebDriverWait(driver, 30).until(EC.visibility_of_element_located((By.CLASS_NAME, 'signed_in')))
-    except:
+        WebDriverWait(driver, 15).until(EC.visibility_of_element_located((By.CLASS_NAME, 'signed_in')))
+    except TimeoutException:
         print("login failed.")
         driver.quit()
         exit()
