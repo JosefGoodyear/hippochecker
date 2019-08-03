@@ -20,6 +20,18 @@ def login():
         exit()
 
 
+def validator(project, problems):
+    valid_problems = []
+    driver.get('https://intranet.hbtn.io/projects/' + project)
+    problem_max = len(driver.find_elements_by_xpath("//*[contains(text(), 'Check your code?')]"))
+    for problem in problems:
+        if 0 <= problem < problem_max:
+            valid_problems.append(problem)
+        else:
+            print(str(problem) + ' is not a valid problem number or cannot be checked.')
+    return valid_problems
+
+
 def checker(project, problems):
     for count, problem in enumerate(problems):
         print('checking #' + str(problem) + '...')
@@ -36,7 +48,6 @@ def checker(project, problems):
             check[problem].click()
         except IndexError:
             print(str(problem) + ' is not a valid problem number, or cannot be checked.')
-            pass
     return problems
 
 
