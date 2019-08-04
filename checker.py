@@ -7,6 +7,7 @@ from selenium.common.exceptions import TimeoutException
 
 
 def login():
+    # log in to the Holberton intranet
     print('logging in...')
     try:
         driver.get('https://intranet.hbtn.io')
@@ -21,9 +22,14 @@ def login():
 
 
 def validator(project, problems):
+    # Check that project and problem numbers are valid
     valid_problems = []
     driver.get('https://intranet.hbtn.io/projects/' + project)
     problem_max = len(driver.find_elements_by_xpath("//*[contains(text(), 'Check your code?')]"))
+    print(problem_max)
+    if problem_max == 0:
+        print('There are no problems to check for project ' + project)
+        return valid_problems
     for problem in problems:
         if 0 <= problem < problem_max:
             valid_problems.append(problem)
@@ -33,25 +39,22 @@ def validator(project, problems):
 
 
 def checker(project, problems):
+    # Check valid problems
     for count, problem in enumerate(problems):
         print('checking #' + str(problem) + '...')
         if count != 0:
             driver.execute_script('window.open('');')
             driver.switch_to.window(driver.window_handles[count])
-        driver.get('https://intranet.hbtn.io/projects/' + project)
-        buttons = driver.find_elements_by_xpath("//*[contains(text(), 'Check your code?')]")
-
-        try:
-            buttons[problem].click()
-            sleep(1)
-            check = driver.find_elements_by_class_name('correction_request_test_admin')
-            check[problem].click()
-        except IndexError:
-            print(str(problem) + ' is not a valid problem number, or cannot be checked.')
-    return problems
+            driver.get('https://intranet.hbtn.io/projects/' + project)
+        all_problems = driver.find_elements_by_xpath("//*[contains(text(), 'Check your code?')]")
+        all_problems[problem].click()
+        sleep(1)  # wait for check test to appear
+        check = driver.find_elements_by_class_name('correction_request_test_admin')
+        check[problem].click()
 
 
 def results(problems):
+    # Print results
     for count, problem in enumerate(problems):
         driver.switch_to.window(driver.window_handles[count])
         sleep(1)  # allow time for tab switch and loading to start

@@ -2,6 +2,7 @@ from sys import argv
 
 
 def parser():
+    # parse user input
     if len(argv) != 3:
         print("2 arguments required\n"
               "usage: ./hippochecker <project number> <i,j,k...>\n"

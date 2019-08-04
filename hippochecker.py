@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#!/usr/bin/env python3  # for Unix/Linux users. Change for windows
 from parser import parser
 from checker import checker, login, results, validator
 from config import results_in_terminal, headless, driver
