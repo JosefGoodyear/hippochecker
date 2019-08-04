@@ -1,5 +1,5 @@
-# The HippoChecker
-### Check your Holberton School projects directly from the command line
+# The Hippochecker
+### Access the Holberton School checker directly from the command line
 ### Quick Start
 1. Install [Python 3](https://www.python.org/downloads/)
 2. Install [Selenium for Python](https://selenium-python.readthedocs.io/)
@@ -14,9 +14,11 @@ where `<project>` is the project number e.g. 272, 229, etc.
 and `problem(s)` are separated by commas (4,1,5) or a single hyphen (0-10) or "all".
 
 ##### Examples:
-    `$ ./hippochecker.py 272 4,1,5`
-    `$ ./hippochecker.py 229 0-10`
-    `$ ./hippochecker.py 229 all`
+`$ ./hippochecker.py 272 4,1,5`
+
+`$ ./hippochecker.py 229 0-10`
+
+`$ ./hippochecker.py 229 all`
     
     
 ### Options
