@@ -8,14 +8,16 @@
 5. Add your intranet email and password to config.py
 ### Usage
 
-`$ ./hippochecker <project> <problem(s)>`
+`$ ./hippochecker.py <project> <problem(s)>`
 
 where `<project>` is the project number e.g. 272, 229, etc.
-and `problem(s)` are separated by commas (4,1,5) or a single hyphen (0-10).
+and `problem(s)` are separated by commas (4,1,5) or a single hyphen (0-10) or "all".
 
 ##### Examples:
-    `$ ./hippochecker 272 4,1,5`
-    `$ ./hippochecker 229 0-10`
+    `$ ./hippochecker.py 272 4,1,5`
+    `$ ./hippochecker.py 229 0-10`
+    `$ ./hippochecker.py 229 all`
+    
     
 ### Options
 Options can be turned on or off in config.py.

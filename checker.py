@@ -25,13 +25,16 @@ def validator(project, problems):
     # Check that project and problem numbers are valid
     valid_problems = []
     driver.get('https://intranet.hbtn.io/projects/' + project)
-    problem_max = len(driver.find_elements_by_xpath("//*[contains(text(), 'Check your code?')]"))
-    print(problem_max)
-    if problem_max == 0:
+    possible_problems = driver.find_elements_by_xpath("//*[contains(text(), 'Check your code?')]")
+    if len(possible_problems) == 0:
         print('There are no problems to check for project ' + project)
         return valid_problems
+    if problems == "all":
+        for problem in range(len(possible_problems)):
+            valid_problems.append(problem)
+        return valid_problems
     for problem in problems:
-        if 0 <= problem < problem_max:
+        if 0 <= problem < len(possible_problems):
             valid_problems.append(problem)
         else:
             print(str(problem) + ' is not a valid problem number or cannot be checked.')

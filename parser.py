@@ -13,9 +13,10 @@ def parser():
         exit()
     else:
         project = argv[1]
-    problems = []
-    if argv[2].isdigit():
-        problems.append(int(argv[2]))
+    if argv[2] == "all":
+        problems = "all"
+    elif argv[2].isdigit():
+        problems = [int(argv[2])]
     elif ',' in argv[2]:
         problems = argv[2].split(',')
         try:
@@ -24,6 +25,7 @@ def parser():
             print("Invalid format: All values between commas must be integers")
             exit()
     elif '-' in argv[2]:
+        problems = []
         try:
             for i in range(int(argv[2].split('-')[0]), int(argv[2].split('-')[1]) + 1):
                 problems.append(i)
