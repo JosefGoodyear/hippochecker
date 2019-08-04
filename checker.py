@@ -7,16 +7,16 @@ from selenium.common.exceptions import TimeoutException
 
 
 def login():
-    # log in to the Holberton intranet
+    # log in to the intranet
     print('logging in...')
     try:
         driver.get('https://intranet.hbtn.io')
-        driver.find_element_by_id("user_login").send_keys(email)
-        driver.find_element_by_id("user_password").send_keys(password)
-        driver.find_element_by_name("commit").click()
+        driver.find_element_by_id('user_login').send_keys(email)
+        driver.find_element_by_id('user_password').send_keys(password)
+        driver.find_element_by_name('commit').click()
         WebDriverWait(driver, 15).until(EC.visibility_of_element_located((By.CLASS_NAME, 'signed_in')))
     except TimeoutException:
-        print("login failed.")
+        print('login failed.')
         driver.quit()
         exit()
 
@@ -29,7 +29,7 @@ def validator(project, problems):
     if len(possible_problems) == 0:
         print('There are no problems to check for project ' + project)
         return valid_problems
-    if problems == "all":
+    if problems == 'all':
         for problem in range(len(possible_problems)):
             valid_problems.append(problem)
         return valid_problems
@@ -67,7 +67,7 @@ def results(problems):
             sleep(1)  # allow time for all results to appear
         except TimeoutException:
             print('-------- Problem #' + str(problem) + ' --------')
-            print("Upon reporting results, timeout occurred")
+            print('Upon reporting results, timeout occurred')
             continue
         code_passed_count = 0
         code_failed_count = 0
@@ -91,7 +91,7 @@ def results(problems):
                 req_failed_count += 1
         if code_passed_count == 0 and code_failed_count == 0 and req_passed_count == 0 and req_failed_count == 0:
             print('-------- Problem #' + str(problem) + ' --------')
-            print("Results failed to load.")
+            print('Results failed to load.')
             continue
         print('-------- Problem #' + str(problem) + ' --------')
         print('REQUIREMENTS: ' + str(req_passed_count) + ' passed. ' + str(req_failed_count) + ' failed.')
