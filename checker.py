@@ -90,9 +90,7 @@ def results(problems):
             if rf.is_displayed():
                 req_failed_count += 1
         if code_passed_count == 0 and code_failed_count == 0 and req_passed_count == 0 and req_failed_count == 0:
-            print('-------- Problem #' + str(problem) + ' --------')
             print('Results failed to load.')
             continue
-        print('-------- Problem #' + str(problem) + ' --------')
         print('REQUIREMENTS: ' + str(req_passed_count) + ' passed. ' + str(req_failed_count) + ' failed.')
         print('OUTPUT: ' + str(code_passed_count) + ' passed. ' + str(code_failed_count) + ' failed.')
