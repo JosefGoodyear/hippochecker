@@ -1,5 +1,5 @@
 from time import sleep
-from config import driver, email, password
+from config import driver, email, password, max_wait_time
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
@@ -61,13 +61,13 @@ def results(problems):
     for count, problem in enumerate(problems):
         driver.switch_to.window(driver.window_handles[count])
         sleep(1)  # allow time for tab switch and loading to start
-        wait = WebDriverWait(driver, 60)  # if you timeout during results reporting, try increasing this number.
+        wait = WebDriverWait(driver, max_wait_time)  # if timeout occurs try increasing max_wait_time.
+        print('-------- Problem #' + str(problem) + ' --------')
         try:
             wait.until(EC.visibility_of_any_elements_located((By.CLASS_NAME, "check-inline")))
             sleep(1)  # allow time for all results to appear
         except TimeoutException:
-            print('-------- Problem #' + str(problem) + ' --------')
-            print('Upon reporting results, timeout occurred')
+            print('A timeout occurred while reporting the results. Try increasing max_wait_time.')
             continue
         code_passed_count = 0
         code_failed_count = 0
