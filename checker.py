@@ -1,5 +1,6 @@
 from time import sleep
-from config import driver, email, password, max_wait_time
+from config import driver, email, password, max_wait_time, no_color
+from color import color
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
@@ -92,5 +93,19 @@ def results(problems):
         if code_passed_count == 0 and code_failed_count == 0 and req_passed_count == 0 and req_failed_count == 0:
             print('Results failed to load.')
             continue
-        print('REQUIREMENTS: ' + str(req_passed_count) + ' passed. ' + str(req_failed_count) + ' failed.')
-        print('OUTPUT: ' + str(code_passed_count) + ' passed. ' + str(code_failed_count) + ' failed.')
+        if no_color:
+            req_passed_str = str(req_passed_count)
+            req_failed_str = str(req_failed_count)
+            code_passed_str = str(code_passed_count)
+            code_failed_str = str(code_failed_count)
+        else:            
+            req_passed_str = (color.green if req_passed_count > 0 else "") +\
+                             str(req_passed_count) + color.reset
+            req_failed_str = (color.red if req_failed_count > 0 else "") +\
+                             str(req_failed_count) + color.reset
+            code_passed_str = (color.bg.green + color.black if code_passed_count > 0 else "") +\
+                              str(code_passed_count) + color.reset
+            code_failed_str = (color.bg.red + color.black if code_failed_count > 0 else "") +\
+                              str(code_failed_count) + color.reset
+        print('REQUIREMENTS: ' + req_passed_str + ' passed. ' + req_failed_str + ' failed.')
+        print('OUTPUT: ' + code_passed_str + ' passed. ' + code_failed_str + ' failed.')
