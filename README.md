@@ -43,4 +43,5 @@ Increase `max_wait_time` if a timeout has occurred or the checker delay has star
 [Josef Goodyear](https://github.com/JosefGoodyear)
 
 ### Contributors
+[Arthur Damm](https://github.com/arthurdamm)
 
